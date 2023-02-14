@@ -10,6 +10,8 @@ import { DeviceInfoService } from './services/device-info.service';
 export class AppComponent implements OnInit {
   public errorIos = false;
   public showModal = false;
+  public lat:any
+  public  lon:any
   constructor(
     private deviceInfoService: DeviceInfoService,
     private router: Router
@@ -25,8 +27,12 @@ export class AppComponent implements OnInit {
     };
     this.deviceInfoService.extractDeviceInfo(bodyDevice).subscribe(
       (data) => {
+
         if(!data.latitude && !data.longitude){
           this.showModal = true;
+        } else {
+          this.lat = data.latitude 
+          this.lon = data.longitude
         }
       },
       (err) => {

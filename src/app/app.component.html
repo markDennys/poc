@@ -31,6 +31,11 @@
   </header>
   <h2>Para prosseguir precisamos de sua localização</h2>
   <button (click)="getLocation()" style="color: black">COMPARTILHAR LOCALIZAÇÃO</button>
+
+  <p style="margin-top: 30px;" *ngIf="lat">Muito obrigado, agora com sua localização conseguimos seguir com a proposta ! 
+    longitude : {{lat}}
+    latitude: {{lon}}
+  </p>
 </body>
 
 
