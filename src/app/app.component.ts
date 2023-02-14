@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   iOS() {
-    console.log(
+    this.errorIos = (
       [
         'iPad Simulator',
         'iPhone Simulator',
