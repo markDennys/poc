@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DeviceInfoService } from './services/device-info.service';
 
 @Component({
@@ -7,16 +8,47 @@ import { DeviceInfoService } from './services/device-info.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private deviceInfoService: DeviceInfoService) {}
-  ngOnInit(): void {}
+  public errorIos = false;
+  public showModal = false;
+  constructor(
+    private deviceInfoService: DeviceInfoService,
+    private router: Router
+  ) {}
+  ngOnInit(): void {
+    this.iOS();
+  }
 
   getLocation() {
     const bodyDevice: any = {
       identificadorProposta: null,
       etapa: 'Aceite termos de uso e privacidade',
     };
-    this.deviceInfoService.extractDeviceInfo(bodyDevice).subscribe((data) => {
-      console.log(data);
-    });
+    this.deviceInfoService.extractDeviceInfo(bodyDevice).subscribe(
+      (data) => {
+        if(!data.latitude && !data.longitude){
+          this.showModal = true;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  reload() {
+    document.location.reload();
+  }
+
+  iOS() {
+    console.log(
+      [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod',
+      ].includes(navigator.platform) ||
+      (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+    );
   }
 }
